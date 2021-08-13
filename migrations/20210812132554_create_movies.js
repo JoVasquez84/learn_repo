@@ -3,8 +3,9 @@ exports.up = function(knex) {
     return knex.schema.createTable('movies', table => {
         table.increments('id');
         table.string('title').notNullable();
-        table.string('genre');
-        table.date('release_date');
+        table.integer('runtime');
+        table.integer('release_year')
+        table.string('director');
         table.timestamps(true,true);
     });
 };

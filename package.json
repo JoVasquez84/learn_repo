@@ -6,15 +6,22 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",
+    "eslint-plugin-jest": "^24.4.0",
     "express": "^4.17.1",
+    "jest": "^27.0.6",
     "knex": "^0.21.21",
     "nodemon": "^2.0.12",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "supertest": "^6.1.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.0"
+  },
   "scripts": {
-    "start": "NODE_ENV=development nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=development nodemon index.js",
+    "test": "PORT=3001 jest"
   },
   "keywords": [],
   "author": "",

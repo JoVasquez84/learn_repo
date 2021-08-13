@@ -7,9 +7,9 @@ if (result.error) {
 const { parsed: envs } = result;
 
 const express = require ('express');
-const bodyParser = require ('body-parser')
+const bodyParser = require ('body-parser');
+const { json } = require('body-parser');
 const app = express();
-const PORT = process.env.PORT || 3000;
 const knex = require('knex')(require('./knexfile.js')[envs.NODE_ENV]);
 
 app.use(express.json());
@@ -101,6 +101,36 @@ app.get('/movies',function(req,res) {
     //knex query ends here
 });
 
+app.post('/movies', function(req,res){
+    let result;
+    const newMovie = req.body;
+    //sconsole.log(newMovie)
+    if (newMovie.title && newMovie.runtime && newMovie.release_year && newMovie.director) {
+        knex('movies')
+        .insert([
+            {title:newMovie.title, 
+             runtime:newMovie.runtime, 
+             release_year:newMovie.release_year, 
+             director:newMovie.director}]
+        )
+        .returning('*')
+        .then( data =>
+            res.status(200).json(data)
+        )
+        .catch(err =>
+            res.status(400).json({
+                message:
+                'Invalid Input From insert'
+            })
+         );
+    } else {
+        res.status(400).json({
+            message:
+            'Invalid Input'
+        })
+    }
+})
+
 
 
 
@@ -118,8 +148,4 @@ app.get('/movies',function(req,res) {
 // .orWhere( knex.raw( 'note      LIKE ?', [ term ] ) )
 // .orWhere( knex.raw( 'user_name LIKE ?', [ term ] ) )
 
-
-
-app.listen(PORT, () => {
-    console.log( `The server is up and running on ${PORT}`);
-});
+module.exports = app;
