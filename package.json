@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development nodemon index.js",
-    "test": "PORT=3001 jest"
+    "test": "PORT=3001 jest --detectOpenHandles --watch"
   },
   "keywords": [],
   "author": "",

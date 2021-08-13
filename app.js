@@ -131,6 +131,27 @@ app.post('/movies', function(req,res){
     }
 })
 
+app.delete('/movies/:id', function (req,res){
+    const toDelete= req.params.id;
+    if (toDelete) {
+        knex('movies')
+        .where('id', toDelete)
+        .del()
+        .returning('*')
+        .then( data => res.status(200).json(data))
+        .catch(err =>
+            res.status(400).json({
+                message:
+                'Invalid Delete Call'
+            })
+         );
+    } else {
+        res.status(400).json({
+            message:
+            'Invalid Input'
+        })
+    }
+})
 
 
 
